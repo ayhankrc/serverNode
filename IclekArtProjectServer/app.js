@@ -126,11 +126,13 @@ io.on("connection",function (socket) {
         });
     });
 
-	
 	socket.on("makeMeOffline",function(data){
-		
+		console.log("on makemeoffline");
 		user_infos_collection.update({"username":data.username},{$set:{"status":"offline"}},function(err){
-			if(err) console.log("makeMeOffline err :"+err); 
+			if(err) console.log("makeMeOffline err :"+err);
+			else{
+			    console.log("Offline oldu :"+data.username);
+            }
 		});
 	});
 
