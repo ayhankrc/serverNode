@@ -126,7 +126,13 @@ io.on("connection",function (socket) {
         });
     });
 
-
+	
+	socket.on("makeMeOffline",function(data){
+		
+		user_infos_collection.update({"username":data.username},{$set:{"status":"offline"}},function(err){
+			if(err) console.log("makeMeOffline err :"+err); 
+		});
+	});
 
     socket.on("Login",function (data) {
       user_infos_collection.findOne({$and:[{"username":data.username},{"password":data.password}]},function (err,foundOne) {
