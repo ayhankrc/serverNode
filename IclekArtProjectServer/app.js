@@ -126,6 +126,7 @@ io.on("connection",function (socket) {
         });
     });
 
+	
 	socket.on("makeMeOffline",function(data){
 		console.log("on makemeoffline");
 		user_infos_collection.update({"username":data.username},{$set:{"status":"offline"}},function(err){
@@ -277,6 +278,22 @@ io.on("connection",function (socket) {
                 socket.emit("SetPasswordSucceeded");
             }
         });
+    });
+
+    socket.on("SetProductInfo",function (data) {
+
+        wormholes_infos_collection.insert({
+
+            p_type:data.p_type,
+            owner:data.owner,
+
+        },function (err) {
+            if(err) console.log("SetProductInfos INSERT ERROR: "+err);
+            else{
+                console.log("Added owner:"+data.owner+" to:"+data.p_type);
+            }
+        });
+
     });
 
     socket.on("GetProductInfo",function (data) {
